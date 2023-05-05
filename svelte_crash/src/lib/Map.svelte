@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
-  import {ikotRoutePoints, ikotEveningRoutePoints, tokiRoutePoints, } from './jeepRoutes.js'
+  import {ikotRoutePoints, ikotEveningRoutePoints, tokiRoutePoints, currentikotRoutePoints } from './jeepRoutes.js'
   import jeep_marker from '$lib/images/jeep_marker.png'
 
 
@@ -98,12 +98,15 @@ for (let i=0; i<driverNum; i++){
 }
 
 function addRoutes(map) {
-  var ikotRoute = L.polyline(ikotRoutePoints, {color: 'yellow'}).addTo(map);
+  var ikotRoute = L.polyline(currentikotRoutePoints, {color: 'yellow'}).addTo(map);
+  var ikotRouteOld = L.polyline(ikotRoutePoints, {color: 'blue'}).addTo(map);
   var ikotEveningRoute = L.polyline(ikotEveningRoutePoints, {color: 'violet'}).addTo(map);
   var tokiRoute = L.polyline(tokiRoutePoints, {color: 'orange'}).addTo(map);
+  
 
   var jeepRoutes = {
     "Ikot" : ikotRoute,
+    "Ikot(Old)" : ikotRouteOld,
     "Ikot(Night)" : ikotEveningRoute,
     "Toki" : tokiRoute,
   }
@@ -117,12 +120,12 @@ function displayMap() {
   map.addLayer(layer);
 
   //Make Jeeps that move around
-  let Jeep1 = new Jeep(map, tokiRoutePoints, 500);  
-  setInterval(function () {Jeep1.usad()}, 60);   
-  let Jeep2 = new Jeep(map, ikotEveningRoutePoints, 100);  
-  setInterval(function () {Jeep2.usad()}, 50);    
-  let Jeep3 = new Jeep(map, ikotRoutePoints, 1000);  
-  setInterval(function () {Jeep3.usad()}, 55);    
+  // let Jeep1 = new Jeep(map, tokiRoutePoints, 500);  
+  // setInterval(function () {Jeep1.usad()}, 60);   
+  // let Jeep2 = new Jeep(map, ikotEveningRoutePoints, 100);  
+  // setInterval(function () {Jeep2.usad()}, 50);    
+  // let Jeep3 = new Jeep(map, ikotRoutePoints, 1000);  
+  // setInterval(function () {Jeep3.usad()}, 55);    
 
   let Jeep4 = new Jeep(map, ikotRoutePoints, 1000);
   setInterval(function () {Jeep4.move_online_jeep(1)}, 1000)

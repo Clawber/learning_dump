@@ -1,10 +1,13 @@
 export function addRoutes(map) {
-  var ikotRoute = L.polyline(ikotRoutePoints, {color: 'yellow'}).addTo(map);
+  var ikotRoute = L.polyline(ikotRoutePoints, {color: 'blue'}).addTo(map);
   var ikotEveningRoute = L.polyline(ikotEveningRoutePoints, {color: 'violet'}).addTo(map);
   var tokiRoute = L.polyline(tokiRoutePoints, {color: 'orange'}).addTo(map);
+  var currentikotRoute = L.polyline(currentikotRoutePoints, {color: 'yellow'}).addTo(map);
+  
 
   var jeepRoutes = {
-    "Ikot" : ikotRoute,
+    "Ikot" : currentikotRoute,
+    "Ikot(old)" : ikotRoute,
     "Ikot(Night)" : ikotEveningRoute,
     "Toki" : tokiRoute,
   }
