@@ -2,6 +2,8 @@
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import {ikotRoutePoints, ikotEveningRoutePoints, tokiRoutePoints, } from './jeepRoutes.js'
+  import jeep_marker from '$lib/images/jeep_marker.png'
+
 
   let mapElement;
   let map;
@@ -26,7 +28,22 @@ leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-leaflet.marker([14.654787833877382, 121.06231633947266]).addTo(map)
+
+
+
+
+var IKOTicon = L.icon({
+  iconUrl: jeep_marker,
+  iconSize:     [60, 60], // size of the icon
+  //shadowSize:   [50, 64], // size of the shadow
+  iconAnchor:   [30, 60], // point of the icon which will correspond to marker's location
+  //shadowAnchor: [4, 62],  // the same for the shadow
+  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+
+// GET request using fetch()
+const URL = 'https://jeeps-api.onrender.com/api/jeeps'
 
 
 
@@ -38,7 +55,7 @@ class Jeep {
     this.map = map
     this.route = route
     this.index = index
-    this.marker = new L.Marker(this.route[0])
+    this.marker = new L.Marker((this.route[0]), {icon: IKOTicon})
     // console.log(`${index}`);
   }
 
@@ -46,9 +63,29 @@ class Jeep {
     // console.log(`usad, index = ${this.index}`);
     this.marker.remove(this.map)
     this.index += 1
-    this.marker = new L.Marker(this.route[ (this.index ) %(this.route.length)]);
+    this.marker = new L.Marker(this.route[ (this.index ) %(this.route.length)], {icon: IKOTicon});
     this.marker.addTo(this.map);
   }
+
+  move_online_jeep(id) {
+    let result = ""
+    
+    fetch(URL + "/" + id)
+      // .then(commits => console.log(commits));
+      .then((response) => response.json())
+      .then((data) => {
+        // result = output of url/id
+        result=data;
+        let new_coord = [result.coords[0], result.coords[1]]
+        // console.log(new_coord);
+
+        this.marker.remove(this.map)
+        this.index += 1
+        this.marker = new L.Marker(this.route[ (this.index ) %(this.route.length)], {icon: IKOTicon});
+        this.marker.addTo(this.map);
+    })
+  }
+
 }
 
 
@@ -86,6 +123,9 @@ function displayMap() {
   setInterval(function () {Jeep2.usad()}, 50);    
   let Jeep3 = new Jeep(map, ikotRoutePoints, 1000);  
   setInterval(function () {Jeep3.usad()}, 55);    
+
+  let Jeep4 = new Jeep(map, ikotRoutePoints, 1000);
+  setInterval(function () {Jeep4.move_online_jeep(1)}, 1000)
 
   addRoutes(map);
 
