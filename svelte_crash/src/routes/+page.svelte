@@ -1,7 +1,12 @@
 <script>
 	import LeafletMap from '$lib/Map.svelte';
+	// import LeafletMap from '../lib/Map.svelte';
 </script>
 
-<main>
+<div class = "pt-14">
+	
 	<LeafletMap />
-</main>
+</div>
+
+
+
