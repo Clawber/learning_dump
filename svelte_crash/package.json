@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"leaflet": "^1.9.3"
+		"leaflet": "^1.9.3",
+		"pg": "^8.10.0"
 	}
 }

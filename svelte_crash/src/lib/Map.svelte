@@ -76,12 +76,20 @@ class Jeep {
       .then((data) => {
         // result = output of url/id
         result=data;
+        console.log(result);
         let new_coord = [result.coords[0], result.coords[1]]
+
         // console.log(new_coord);
+        // this.marker.remove(this.map)
+        // this.index += 1
+        // this.marker = new L.Marker(this.route[ (this.index ) %(this.route.length)], {icon: IKOTicon});
+        // this.marker.addTo(this.map);
+
+        // console.log(this.route[ (this.index ) %(this.route.length)]);
+
 
         this.marker.remove(this.map)
-        this.index += 1
-        this.marker = new L.Marker(this.route[ (this.index ) %(this.route.length)], {icon: IKOTicon});
+        this.marker = new L.Marker(new_coord, {icon: IKOTicon});
         this.marker.addTo(this.map);
     })
   }
@@ -99,9 +107,9 @@ for (let i=0; i<driverNum; i++){
 
 function addRoutes(map) {
   var ikotRoute = L.polyline(currentikotRoutePoints, {color: 'yellow'}).addTo(map);
-  var ikotRouteOld = L.polyline(ikotRoutePoints, {color: 'blue'}).addTo(map);
-  var ikotEveningRoute = L.polyline(ikotEveningRoutePoints, {color: 'violet'}).addTo(map);
-  var tokiRoute = L.polyline(tokiRoutePoints, {color: 'orange'}).addTo(map);
+  // var ikotRouteOld = L.polyline(ikotRoutePoints, {color: 'blue'}).addTo(map);
+  // var ikotEveningRoute = L.polyline(ikotEveningRoutePoints, {color: 'violet'}).addTo(map);
+  // var tokiRoute = L.polyline(tokiRoutePoints, {color: 'orange'}).addTo(map);
   
 
   var jeepRoutes = {
@@ -110,7 +118,7 @@ function addRoutes(map) {
     "Ikot(Night)" : ikotEveningRoute,
     "Toki" : tokiRoute,
   }
-  var layerControl = L.control.layers(null, jeepRoutes).addTo(map);
+  // var layerControl = L.control.layers(null, jeepRoutes).addTo(map);
 
 }
 
@@ -149,6 +157,7 @@ displayMap()
 
 // --------------------------------------------------------------------------------
 // Jeeps logic end
+
 
 
 
