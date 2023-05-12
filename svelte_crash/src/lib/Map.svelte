@@ -135,8 +135,14 @@ function displayMap() {
   // let Jeep3 = new Jeep(map, ikotRoutePoints, 1000);  
   // setInterval(function () {Jeep3.usad()}, 55);    
 
-  let Jeep4 = new Jeep(map, ikotRoutePoints, 1000);
-  setInterval(function () {Jeep4.move_online_jeep(1)}, 1000)
+  let Jeep1 = new Jeep(map, ikotRoutePoints, 1000);
+  setInterval(function () {Jeep1.move_online_jeep(1)}, 1000)
+
+  let Jeep2 = new Jeep(map, ikotRoutePoints, 1000);
+  setInterval(function () {Jeep2.move_online_jeep(2)}, 1000)
+
+  let Jeep3 = new Jeep(map, ikotRoutePoints, 1000);
+  setInterval(function () {Jeep3.move_online_jeep(3)}, 1000)
 
   addRoutes(map);
 
